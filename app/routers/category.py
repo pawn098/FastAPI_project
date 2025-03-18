@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from typing import Annotated
-from sqlalchemy import insert, select, update
+from sqlalchemy import insert, select, update, delete
 from slugify import slugify
 
 from app.backend.db_depends import get_db
@@ -65,3 +65,9 @@ async def delete_category(db: Annotated[Session, Depends(get_db)], category_slug
         'status_code': status.HTTP_200_OK,
         'transaction': 'Category delete is successful'
     }
+
+@router.delete("/delete_table")
+async def delete_table(db: Annotated[Session, Depends(get_db)]):
+    db.execute(delete(Category))
+    db.commit()
+    return "Yes"
