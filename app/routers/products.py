@@ -9,9 +9,9 @@ from app.schemas import CreateProduct
 from app.models.products import Product
 from app.models.category import Category
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(prefix="/products", tags=["Товары"])
 
-@router.get('/')
+@router.get('/', description="Данный запрос предоставляет весь список товаров")
 async def all_products(db: Annotated[Session, Depends(get_db)]):
     products = db.scalars(select(Product).join(Category).where(Product.is_active == True,
                                                                Category.is_active == True,
@@ -22,7 +22,7 @@ async def all_products(db: Annotated[Session, Depends(get_db)]):
             detail='There are no product'
         )
     return products
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/', status_code=status.HTTP_201_CREATED, description="Запрос для создания товара")
 async def create_product(db: Annotated[Session, Depends(get_db)], create_product: CreateProduct):
     category = db.scalar(select(Category).where(Category.id == create_product.category))
     if category is None:

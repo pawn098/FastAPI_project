@@ -10,7 +10,7 @@ from app.models.category import Category
 from app.models.products import Product
 
 
-router = APIRouter(prefix='/categories', tags=['category'])
+router = APIRouter(prefix='/categories', tags=['Категории товаров'])
 
 @router.get('/')
 async def get_all_categories(db: Annotated[Session, Depends(get_db)]):
@@ -31,7 +31,7 @@ async def create_category(db: Annotated[Session, Depends(get_db)],
     }
 
 
-@router.put('/{category_slug}')
+@router.put('/{category_slug}', description='Изменение категории товара')
 async def update_category(db: Annotated[Session, Depends(get_db)], category_slug: str, update_category: CreateCategory):
     category = db.scalar(select(Category).where(Category.slug == category_slug))
     if category is None:
