@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class CreateProduct(BaseModel):
     name: str
@@ -18,3 +18,7 @@ class CreateUser(BaseModel):
     username: str
     email: str
     password: str
+
+class CreateReviews(BaseModel):
+    comment: str
+    grade: int = Field(ge=1, le=5)
