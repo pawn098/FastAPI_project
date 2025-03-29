@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status, HTTPException
-from typing import Annotated
+from typing import Annotated, List
 from sqlalchemy import insert, select, delete
 from slugify import slugify
 from sqlalchemy.ext.asyncio import AsyncSession
